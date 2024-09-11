@@ -1,5 +1,8 @@
 package lesson16;
 
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import org.example.lesson16.HomePage;
 import org.example.lesson16.HomePageSteps;
 import org.example.lesson16.PaySectionBuilder;
@@ -12,6 +15,8 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@Epic("MTS Payment Tests")
+@Feature("Page Tests")
 public class HomePageTest {
     public WebDriver driver;
     public HomePage mtsPage;
@@ -32,6 +37,7 @@ public class HomePageTest {
     @Test
     @Order(1)
     @DisplayName("Проверка валидного названия блока")
+    @Story("Check block title")
     public void testTitle() {
         assertEquals("Онлайн пополнение без комиссии", mtsPage.getBlockTitle(), "Название не соответствует ожидаемому.");
     }
@@ -39,6 +45,7 @@ public class HomePageTest {
     @Test
     @Order(2)
     @DisplayName("Проверка логотипов")
+    @Story("Check logos")
     public void testLogo() {
         List<WebElement> logos = mtsPage.getLogos();
         for (WebElement logo : logos) {
@@ -51,6 +58,7 @@ public class HomePageTest {
     @Test
     @Order(3)
     @DisplayName("Проверка ссылки")
+    @Story("Check link")
     public void testLink() {
         mtsSteps.clickLink();
         String expectedTitle = "Порядок оплаты и безопасность интернет платежей";
@@ -61,6 +69,7 @@ public class HomePageTest {
     @Test
     @Order(4)
     @DisplayName("Проверка кнопки - Продолжить")
+    @Story("Check continue button")
     public void testButton() {
         PaySectionBuilder object = PaySectionBuilder.builder()
                         .paymentSum("1")
@@ -74,6 +83,7 @@ public class HomePageTest {
     @Test
     @Order(5)
     @DisplayName("Проверка плейсхолдеров в блоке - Услуги связи")
+    @Story("Check placeholders in connection services block")
     public void testPlaceholderPayConnection() {
         assertEquals("Номер телефона", mtsPage.getPlaceholder(mtsPage.getConnectionPhone()), "Плейсхолдер не соответствует ожидаемому");
         assertEquals("Сумма", mtsPage.getPlaceholder(mtsPage.getConnectionSum()), "Плейсхолдер не соответствует ожидаемому");
@@ -83,6 +93,7 @@ public class HomePageTest {
     @Test
     @Order(6)
     @DisplayName("Проверка плейсхолдеров в блоке - Домашний интернет")
+    @Story("Check placeholders in home internet block")
     public void testPlaceholderPayInternet() {
         assertEquals("Номер абонента", mtsPage.getPlaceholder(mtsPage.getInternetPhone()), "Плейсхолдер не соответствует ожидаемому");
         assertEquals("Сумма", mtsPage.getPlaceholder(mtsPage.getInternetSum()), "Плейсхолдер не соответствует ожидаемому");
@@ -92,6 +103,7 @@ public class HomePageTest {
     @Test
     @Order(7)
     @DisplayName("Проверка плейсхолдеров в блоке - Рассрочка")
+    @Story("Check placeholders in installment block")
     public void testPlaceholderPayInstalment() {
         assertEquals("Номер счета на 44", mtsPage.getPlaceholder(mtsPage.getScoreInstalment()), "Плейсхолдер не соответствует ожидаемому");
         assertEquals("Сумма", mtsPage.getPlaceholder(mtsPage.getInstalmentSum()), "Плейсхолдер не соответствует ожидаемому");
@@ -101,6 +113,7 @@ public class HomePageTest {
     @Test
     @Order(8)
     @DisplayName("Проверка плейсхолдеров в блоке - Задолженность")
+    @Story("Check placeholders in debt block")
     public void testPlaceholderPayArrears() {
         assertEquals("Номер счета на 2073", mtsPage.getPlaceholder(mtsPage.getScoreArrears()), "Плейсхолдер не соответствует ожидаемому");
         assertEquals("Сумма", mtsPage.getPlaceholder(mtsPage.getArrearsSum()), "Плейсхолдер не соответствует ожидаемому");
@@ -110,6 +123,7 @@ public class HomePageTest {
     @Test
     @Order(9)
     @DisplayName("Проверка введеных данных в фрейме")
+    @Story("Check entered data in frame")
     public void testDataFrame() {
         mtsPage.switchToFrame(mtsPage.getFrameLocator());
         assertTrue(mtsPage.getTextSum(mtsPage.getSumText()).contains("1.00 BYN"), "Сумма не соответствует");
@@ -120,6 +134,7 @@ public class HomePageTest {
     @Test
     @Order(10)
     @DisplayName("Проверка надписей в реквизитах")
+    @Story("Check labels in requisites")
     public void testLabels() {
         mtsPage.switchToFrame(mtsPage.getFrameLocator());
         assertEquals("Номер карты", mtsPage.getLabel(mtsPage.getCardLabel()), "Надпись не соответствует ожидаемому");
@@ -131,6 +146,7 @@ public class HomePageTest {
     @Test
     @Order(11)
     @DisplayName("Проверка наличия иконок в фрейме")
+    @Story("Check icons in frame")
     public void testIconsFrame() {
         List<WebElement> icons = mtsPage.getIconsFrame();
         mtsPage.switchToFrame(mtsPage.getFrameLocator());
